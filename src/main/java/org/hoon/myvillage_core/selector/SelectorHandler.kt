@@ -130,7 +130,7 @@ class SelectorHandler (private val selector: Selector) {
     }
 
     private fun pairLocation(direction: Double) : Pair<Location, Location> {
-        val selectorLocation = selector.pointEntity!!.location
+        val selectorLocation = selector.pointEntity!!.location.add(-0.5, 0.0, -0.5)
 
         val rangeX: Double = selector.rangeX / 2.0 + if (isOdd(selector.rangeX)) 0.5 else 0.0
         val rangeZ: Double = selector.rangeZ / 2.0 + if (isOdd(selector.rangeZ)) 0.5 else 0.0

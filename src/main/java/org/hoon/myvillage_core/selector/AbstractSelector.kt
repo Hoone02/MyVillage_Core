@@ -81,7 +81,6 @@ abstract class AbstractSelector(private val stack1 : ItemStack,private val stack
 
     private fun createAndSpawnNewSelector(player: Player, rangeX: Float, rangeY: Float, rangeZ: Float) {
 
-
         val selector = Selector(player, rangeX, rangeY, rangeZ, stack1, stack2)
         SelectorManager.spawn(selector)
         SelectorTask.run(selector)
