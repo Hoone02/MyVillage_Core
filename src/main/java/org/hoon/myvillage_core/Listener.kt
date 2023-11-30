@@ -7,14 +7,35 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.inventory.ItemStack
 import org.hoon.myvillage_core.protection.ProtectionInteract
 import org.hoon.myvillage_core.protection.ProtectionManager
 import org.hoon.myvillage_core.protection.ProtectionPlace
+import org.hoon.myvillage_core.selector.SelectorManager
+import org.hoon.myvillage_core.selector.changeDirection
 import org.hoon.myvillage_core.util.canInteract
+import org.hoon.myvillage_core.util.getSlotChangeDirection
 import java.util.UUID
 
 class Listener : Listener {
+
+    @EventHandler
+    fun onChangeSlot(event: PlayerItemHeldEvent) {
+        val player = event.player
+        val newSlot = event.newSlot
+        val oldSlot = event.previousSlot
+        val direction = getSlotChangeDirection(newSlot, oldSlot)
+
+        val test = SelectorManager.exists(player)
+
+        if (test) {
+            val selector = SelectorManager.get(player)!!
+            selector.direction = changeDirection(selector, direction)
+
+            event.isCancelled = true
+        }
+    }
 
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {

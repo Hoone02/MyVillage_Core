@@ -17,6 +17,7 @@ import org.hoon.myvillage_core.selector.Selector
 import org.hoon.myvillage_core.selector.SelectorManager
 import org.hoon.myvillage_core.selector.placeSelector
 import org.hoon.myvillage_core.util.getTag
+import org.hoon.myvillage_core.util.rotateY
 import org.hoon.myvillage_core.util.sound
 import org.hoon.myvillage_core.util.title.TitleUtil
 import java.util.*
@@ -52,6 +53,8 @@ class ProtectionPlace (stack1: ItemStack, stack2 : ItemStack): AbstractSelector(
         meta.setCustomModelData(1)
         blockData.itemMeta = meta
         TitleUtil.stop(player)
+
+        block.rotateY(selector.direction)
 
         val randomUUID = UUID.randomUUID()
 

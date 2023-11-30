@@ -22,6 +22,28 @@ fun tempPlaceSelector(selector: Selector, player: Player) : Location {
     return location
 }
 
+fun changeDirection(selector: Selector, string: String): Double {
+    val direction = selector.direction
+
+    return when (string) {
+        "오른쪽" -> when (direction) {
+            0.0 -> 90.0
+            90.0 -> 180.0
+            180.0 -> 270.0
+            270.0 -> 0.0
+            else -> direction // 예상치 못한 값의 경우 현재 방향을 유지
+        }
+        "왼쪽" -> when (direction) {
+            0.0 -> 270.0
+            90.0 -> 0.0
+            180.0 -> 90.0
+            270.0 -> 180.0
+            else -> direction // 예상치 못한 값의 경우 현재 방향을 유지
+        }
+        else -> direction // "오른쪽" 또는 "왼쪽"이 아닌 경우 현재 방향을 유지
+    }
+}
+
 fun resultLocation(blockFace: BlockFace) : Vector {
     return when (blockFace) {
         BlockFace.NORTH -> {
