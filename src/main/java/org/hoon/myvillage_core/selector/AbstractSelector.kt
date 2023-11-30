@@ -79,10 +79,8 @@ abstract class AbstractSelector {
     }
 
     private fun createAndSpawnNewSelector(player: Player, rangeX: Float, rangeY: Float, rangeZ: Float) {
-        val entity = player.world.spawn(player.location, ArmorStand::class.java)
-        val entity2 = player.world.spawn(player.location, ArmorStand::class.java)
         val selector = Selector(player, rangeX, rangeY, rangeZ, Material.WHITE_GLAZED_TERRACOTTA, Material.LIGHT_GRAY_GLAZED_TERRACOTTA)
         SelectorManager.spawn(selector)
-        SelectorTask.run(selector, entity2, entity)
+        SelectorTask.run(selector)
     }
 }

@@ -59,6 +59,8 @@ object ProtectionPlace: AbstractSelector() {
         player.sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
         player.sound(Sound.BLOCK_WOOD_PLACE, 1.0f, 1.0f)
 
+        ProtectionRangeViewer.remove(player)
+
     }
 
     private fun setBarrier(location: Location, player: Player, uuid: UUID) {

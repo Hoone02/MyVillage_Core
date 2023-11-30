@@ -16,11 +16,11 @@ class SelectorHandler (private val selector: Selector) {
     private val player = selector.player
 
     // 선택기 상태 업데이트
-    fun updateSelectorState(entity2: Entity, entity: Entity) {
+    fun updateSelectorState() {
         val location = getTargetBlockLocation()
 
         if (location != null) {
-            movingSelector(location, entity, entity2)
+            movingSelector(location)
 
             val isCheck = checkBlockStates(selector, player)
             selector.isCheck = isCheck
@@ -68,18 +68,19 @@ class SelectorHandler (private val selector: Selector) {
     }
 
     private fun isOverlapRange(player: Player) : Boolean {
-        var isOverlap = false
         for (protection in ProtectionManager.getList()) {
-            if (protection.owner == player.uniqueId.toString()) return false
-            isOverlap = BlockUtil.checkOverlap(
-                protection.firstPoint,
-                protection.secondPoint,
-                selector.rangeLoc!!.first,
-                selector.rangeLoc!!.second
-            )
-        }
+            if (protection.owner == player.uniqueId.toString()) continue
 
-        return isOverlap
+            if (BlockUtil.checkOverlap(
+                    protection.firstPoint,
+                    protection.secondPoint,
+                    selector.rangeLoc!!.first,
+                    selector.rangeLoc!!.second
+                )) {
+                return true // 겹치는 영역이 있으면 바로 true 반환
+            }
+        }
+        return false // 모든 보호 영역을 확인한 후 겹치는 부분이 없으면 false 반환
     }
 
     // 선택기 상태 업데이트
@@ -94,7 +95,7 @@ class SelectorHandler (private val selector: Selector) {
         }
     }
 
-    private fun movingSelector(location : Location, entity: Entity, entity2: Entity) {
+    private fun movingSelector(location : Location) {
         val player = selector.player
 
         val resultLocation = resultLocation(player.getTargetBlockFace(10)!!)
@@ -107,9 +108,6 @@ class SelectorHandler (private val selector: Selector) {
         selector.rangeLoc = Pair(pairLoc.first, pairLoc.second)
 
         selector.selectorEntity?.rotateY(selector.direction)
-
-        entity.teleport(selector.rangeLoc!!.first)
-        entity2.teleport(selector.rangeLoc!!.second)
     }
 
     private fun selectorLocation(direction: Double) : Pair<Double, Double> {

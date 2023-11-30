@@ -16,11 +16,13 @@ object ProtectionRangeViewer {
         for (p in ProtectionManager.getList()) {
             val location = p.cantorPoint.clone().add(-5.0, 0.0, -5.0)
             val entity = player.world.spawn(location, BlockDisplay::class.java)
-            entity.block = Bukkit.createBlockData(Material.YELLOW_STAINED_GLASS)
+            if (p.owner == player.uniqueId.toString()) {
+                entity.block = Bukkit.createBlockData(Material.LIME_STAINED_GLASS)
+            } else {
+                entity.block = Bukkit.createBlockData(Material.YELLOW_STAINED_GLASS)
+            }
 
             entityList[player]?.add(entity) ?: entityList.put(player, mutableListOf(entity))
-
-            player.sendMessage(entityList[player].toString())
 
             entity.updateTransformation {
                 scale {

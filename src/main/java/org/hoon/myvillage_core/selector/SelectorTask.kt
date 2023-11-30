@@ -13,10 +13,10 @@ import org.hoon.myvillage_core.util.BlockUtil
 object SelectorTask {
     var selectorTask = mutableMapOf<Player, BukkitTask>()
 
-    fun run(selector: Selector, entity: Entity, entity2: Entity) {
+    fun run(selector: Selector) {
         val player = selector.player
         selectorTask[player] = Bukkit.getScheduler().runTaskTimer(MyVillage_Core.instance, Runnable {
-            SelectorHandler(selector).updateSelectorState(entity2, entity) // 선택기 상태 업데이트
+            SelectorHandler(selector).updateSelectorState() // 선택기 상태 업데이트
         }, 0, 1)
     }
 }
