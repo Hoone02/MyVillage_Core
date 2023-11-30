@@ -1,0 +1,6 @@
+name: MyVillage_Core
+version: '${project.version}'
+main: org.hoon.myvillage_core.MyVillage_Core
+api-version: '1.20'
+commands:
+  test:
