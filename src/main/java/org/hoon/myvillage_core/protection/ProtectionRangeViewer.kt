@@ -13,6 +13,7 @@ object ProtectionRangeViewer {
     private val entityList = mutableMapOf<Player, MutableList<Entity>>()
 
     fun view(player: Player) {
+        if (ProtectionManager.getList().isEmpty()) return
         for (p in ProtectionManager.getList()) {
             val location = p.cantorPoint.clone().add(-5.0, 0.0, -5.0)
             val entity = player.world.spawn(location, BlockDisplay::class.java)
@@ -36,6 +37,7 @@ object ProtectionRangeViewer {
     }
 
     fun remove(player: Player) {
+        if (entityList[player] == null) return
         for (entity in entityList[player]!!) {
             entity.remove()
         }
