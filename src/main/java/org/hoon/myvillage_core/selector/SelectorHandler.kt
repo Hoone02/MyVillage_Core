@@ -49,7 +49,6 @@ class SelectorHandler (private val selector: Selector) {
         val isOverlap = isOverlap()
         val isOverlapRange = isOverlapRange(player)
 
-        player.sendMessage("$areBlocksBelowSelectedRangeNotAir")
         return isTargetBlockUp && isPointEntityInAir && areBlocksInSelectedRangeAir && areBlocksBelowSelectedRangeNotAir && !isOverlap && !isOverlapRange
     }
 

@@ -11,6 +11,7 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.hoon.myvillage_core.protection.ProtectionManager
 import org.hoon.myvillage_core.protection.ProtectionPlace
+import org.hoon.myvillage_core.protection.ProtectionRangeViewer
 import org.hoon.myvillage_core.util.setHideEntity
 import org.hoon.myvillage_core.util.sound
 import org.hoon.myvillage_core.util.title.TitleUtil
@@ -27,6 +28,7 @@ abstract class AbstractSelector {
     fun execute(player : Player , event: PlayerInteractEvent, place : () -> Unit, rangeX: Float, rangeY: Float = 0.5f, rangeZ: Float) {
         if (event.action == Action.RIGHT_CLICK_AIR || event.action == Action.RIGHT_CLICK_BLOCK) {
             handleRightClickAction(player, place, rangeX, rangeY, rangeZ)
+
         } else {
             cancelActions(player)
             TitleUtil.stop(player)
@@ -43,6 +45,8 @@ abstract class AbstractSelector {
             player.sendMessage("§e[MyVillage] §f설치 구역을 선택해주세요.")
             TitleUtil.setSubTitle(player, "${t}[취소]${left}                    ${right} [확인]")
             TitleUtil.run(player)
+
+            ProtectionRangeViewer.view(player)
         }
     }
 
@@ -70,6 +74,7 @@ abstract class AbstractSelector {
             SelectorManager.remove(SelectorManager.get(player)!!)
             player.sound(Sound.ITEM_ARMOR_EQUIP_LEATHER, 1.0f, 1.0f)
             SelectorTask.selectorTask[player]!!.cancel()
+            ProtectionRangeViewer.remove(player)
         }
     }
 

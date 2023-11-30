@@ -49,7 +49,7 @@ object ProtectionPlace: AbstractSelector() {
 
         val randomUUID = UUID.randomUUID()
 
-        val protection = Protection(randomUUID, player.uniqueId.toString(), pair.first, pair.second, selector.pointEntity!!.location)
+        val protection = Protection(randomUUID, player.uniqueId.toString(), pair.first, pair.second, location)
 
         ProtectionManager.create(protection)
 
