@@ -5,9 +5,11 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.BlockDisplay
+import org.bukkit.entity.ItemDisplay
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.EquipmentSlot
+import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 import org.hoon.myvillage_core.MyVillage_Core
 import org.hoon.myvillage_core.selector.AbstractSelector
@@ -19,7 +21,8 @@ import org.hoon.myvillage_core.util.sound
 import org.hoon.myvillage_core.util.title.TitleUtil
 import java.util.*
 
-object ProtectionPlace: AbstractSelector() {
+
+class ProtectionPlace (stack1: ItemStack, stack2 : ItemStack): AbstractSelector(stack1, stack2) {
 
     fun placeWorkstation(player: Player, event: PlayerInteractEvent) {
         if (!isValidAction(player, event)) return
@@ -41,10 +44,13 @@ object ProtectionPlace: AbstractSelector() {
 
     private fun setBlockPlace(player: Player, selector: Selector) {
         val pair = selector.rangeLoc ?: return
-        val location = placeSelector(selector, player)
+        val location = placeSelector(selector, player).block.location.add(0.5, 0.5, 0.5)
 
-        val block = player.world.spawn(location, BlockDisplay::class.java)
-        val blockData = Bukkit.createBlockData(Material.GRAY_GLAZED_TERRACOTTA)
+        val block = player.world.spawn(location, ItemDisplay::class.java)
+        val blockData = ItemStack(Material.SHULKER_SHELL)
+        val meta = blockData.itemMeta
+        meta.setCustomModelData(1)
+        blockData.itemMeta = meta
         TitleUtil.stop(player)
 
         val randomUUID = UUID.randomUUID()
@@ -54,7 +60,7 @@ object ProtectionPlace: AbstractSelector() {
         ProtectionManager.create(protection)
 
         setBarrier(location, player, randomUUID)
-        block.block = blockData
+        block.itemStack = blockData
 
         player.sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
         player.sound(Sound.BLOCK_WOOD_PLACE, 1.0f, 1.0f)

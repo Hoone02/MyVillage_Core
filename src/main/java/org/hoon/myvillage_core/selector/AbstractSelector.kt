@@ -9,6 +9,7 @@ import org.bukkit.entity.BlockDisplay
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.ItemStack
 import org.hoon.myvillage_core.protection.ProtectionManager
 import org.hoon.myvillage_core.protection.ProtectionPlace
 import org.hoon.myvillage_core.protection.ProtectionRangeViewer
@@ -17,7 +18,7 @@ import org.hoon.myvillage_core.util.sound
 import org.hoon.myvillage_core.util.title.TitleUtil
 import org.hoon.myvillage_core.util.updateTransformation
 
-abstract class AbstractSelector {
+abstract class AbstractSelector(private val stack1 : ItemStack,private val stack2 : ItemStack) {
     private val unicodeChar = (0x0201).toChar()
     private val left = unicodeChar.toString()
     private val unicodeChar2 = (0x0202).toChar()
@@ -79,7 +80,9 @@ abstract class AbstractSelector {
     }
 
     private fun createAndSpawnNewSelector(player: Player, rangeX: Float, rangeY: Float, rangeZ: Float) {
-        val selector = Selector(player, rangeX, rangeY, rangeZ, Material.WHITE_GLAZED_TERRACOTTA, Material.LIGHT_GRAY_GLAZED_TERRACOTTA)
+
+
+        val selector = Selector(player, rangeX, rangeY, rangeZ, stack1, stack2)
         SelectorManager.spawn(selector)
         SelectorTask.run(selector)
     }

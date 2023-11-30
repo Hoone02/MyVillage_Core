@@ -3,7 +3,9 @@ package org.hoon.myvillage_core.selector
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.BlockDisplay
+import org.bukkit.entity.ItemDisplay
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import org.hoon.myvillage_core.util.updateTransformation
 
 object SelectorManager {
@@ -11,9 +13,9 @@ object SelectorManager {
 
     fun spawn(selector: Selector) { // 선택기 생성
         val player = selector.player
-        val entity = player.world.spawn(player.location, BlockDisplay::class.java)
+        val entity = player.world.spawn(player.location, ItemDisplay::class.java)
         val range = player.world.spawn(player.location, BlockDisplay::class.java)
-        val blockData = Bukkit.createBlockData(Material.WHITE_GLAZED_TERRACOTTA)
+        val itemStack = ItemStack(selector.placeable)
         val rangeBlockData = Bukkit.createBlockData(Material.LIME_STAINED_GLASS)
 
         range.updateTransformation { scale { // 범위 엔티티 크기 조정
@@ -23,7 +25,7 @@ object SelectorManager {
         } }
 
 
-        entity.block = blockData // 선택기 엔티티 블록 설정
+        entity.itemStack = itemStack // 선택기 엔티티 블록 설정
         range.block = rangeBlockData // 범위 엔티티 블록 설정
 
         selector.pointEntity = entity // 선택기 엔티티

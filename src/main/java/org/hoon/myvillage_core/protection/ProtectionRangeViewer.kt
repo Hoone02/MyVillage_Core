@@ -15,7 +15,7 @@ object ProtectionRangeViewer {
     fun view(player: Player) {
         if (ProtectionManager.getList().isEmpty()) return
         for (p in ProtectionManager.getList()) {
-            val location = p.cantorPoint.clone().add(-5.0, 0.0, -5.0)
+            val location = p.cantorPoint.clone().add(-5.5, -0.5, -5.5)
             val entity = player.world.spawn(location, BlockDisplay::class.java)
             if (p.owner == player.uniqueId.toString()) {
                 entity.block = Bukkit.createBlockData(Material.LIME_STAINED_GLASS)

@@ -6,6 +6,7 @@ import org.bukkit.Material
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import org.hoon.myvillage_core.protection.ProtectionManager
 import org.hoon.myvillage_core.util.BlockUtil
 import org.hoon.myvillage_core.util.isOdd
@@ -86,10 +87,10 @@ class SelectorHandler (private val selector: Selector) {
     // 선택기 상태 업데이트
     private fun updateSelectorState(isCheck: Boolean) {
         if (!isCheck) {
-            selector.pointEntity?.block = Bukkit.createBlockData(selector.nonPlaceable)
+            selector.pointEntity?.itemStack = ItemStack(selector.nonPlaceable)
             selector.selectorEntity?.block = Bukkit.createBlockData(Material.RED_STAINED_GLASS)
         } else {
-            selector.pointEntity?.block = Bukkit.createBlockData(selector.placeable)
+            selector.pointEntity?.itemStack = ItemStack(selector.placeable)
             selector.selectorEntity?.block = Bukkit.createBlockData(Material.LIME_STAINED_GLASS)
             selector.location = selector.pointEntity?.location
         }
@@ -103,11 +104,12 @@ class SelectorHandler (private val selector: Selector) {
         val pair = selectorLocation(selector.direction)
         val pairLoc = pairLocation(selector.direction)
 
-        selector.pointEntity?.teleport(location.clone().add(resultLocation))
+        selector.pointEntity?.teleport(location.clone().add(resultLocation).add(0.5, 0.5, 0.5))
         selector.selectorEntity?.teleport(location.clone().add(resultLocation).add(pair.first, 0.0, pair.second))
         selector.rangeLoc = Pair(pairLoc.first, pairLoc.second)
 
         selector.selectorEntity?.rotateY(selector.direction)
+        selector.pointEntity?.rotateY(selector.direction)
     }
 
     private fun selectorLocation(direction: Double) : Pair<Double, Double> {
