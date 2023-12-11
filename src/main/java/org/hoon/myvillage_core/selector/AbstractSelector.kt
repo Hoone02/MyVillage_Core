@@ -42,7 +42,7 @@ abstract class AbstractSelector(private val stack1 : ItemStack,private val stack
         } else {
             createAndSpawnNewSelector(player, rangeX, rangeY, rangeZ)
             TitleUtil.setTitle(player, "")
-            player.sound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f)
+            player.sound(Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 0.7f)
             player.sendMessage("§e[MyVillage] §f설치 구역을 선택해주세요.")
             TitleUtil.setSubTitle(player, "${t}[취소]${left}                    ${right} [확인]")
             TitleUtil.run(player)
@@ -60,7 +60,7 @@ abstract class AbstractSelector(private val stack1 : ItemStack,private val stack
 
         if (selector.placeStage == 0) {
             tempPlaceSelector(selector, player)
-            player.sound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f)
+            player.sound(Sound.BLOCK_NOTE_BLOCK_BELL, 1.0f, 1.0f)
             player.sendMessage("§e[MyVillage] §f설치 구역을 다시 확인해주세요.")
             TitleUtil.setSubTitle(player, "${t}[취소]${left}                    ${right} [확인]")
             selector.placeStage = 1
